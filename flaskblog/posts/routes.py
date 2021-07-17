@@ -13,7 +13,7 @@ posts = Blueprint('posts', __name__)
 def new_post(): 
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(title=form.title.data, content=form.content.data, author=current_user)
+        post = Post(title=form.title.data, content=form.content.data, user_id=current_user)
         post.save()
         flash('Your post has been created!', 'success')
         return redirect(url_for('main.home'))

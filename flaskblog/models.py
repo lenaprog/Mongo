@@ -16,7 +16,7 @@ class User(db.Document, UserMixin):
     email = db.EmailField(unique=True, nullable=False)
     image_file = db.StringField(nullable=False, default='default.jpg')
     password = db.StringField(nullable=False)
-    posts = db.ReferenceField('Post')
+    posts = db.ReferenceField('Post', backref='author',lazy=True)
 
     def get_reset_token(self, expires_sec=1800):
         s = Serializer(current_app.config['SECRET_KEY'], expires_sec)
@@ -37,12 +37,23 @@ class User(db.Document, UserMixin):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
 
-class Post(db.Model):
+class Post(db.Document):
     #id = db.Column(db.Integer, primary_key=True)
     title = db.StringField(nullable = False)
     date_posted = db.DateField(nullable = False, default = datetime.utcnow)
     content = db.StringField(nullable = False)
+    #address
+    #location (geometry location)
+    #has baby chaning/wheelchair (Boolean)
+    #review_id = ReferenceList (Review)
     user_id = db.ReferenceField('User')
 
     def __repr__(self):
         return f"Post('{self.title}', '{self.date_posted}')"
+
+
+#class Review(db.Document):
+    #description/comment
+    #rating 1-5
+    #post_id = ReferenceField (Post)
+    #user_id = ReferenceField (User)
