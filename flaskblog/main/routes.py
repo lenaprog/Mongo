@@ -6,8 +6,8 @@ main = Blueprint('main', __name__)
 @main.route("/")
 @main.route("/home")
 def home():
-    page = request.args.get('page', 1, type=int)
-    posts = Post.objects.all()
+    #page = request.args.get('page', 1, type=int)
+    posts = Post.objects.all().order_by('-date_posted')
     return render_template ('home.html', posts=posts)
 
 @main.route("/about")

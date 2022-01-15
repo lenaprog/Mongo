@@ -1,0 +1,10 @@
+
+export MONGODB_BLOG_USERNAME='Lena' #Lenaschaerer@web.de'
+export MONGODB_BLOG_PASSWORD='Nerdy+it21'
+#export MONGO_DB_DATABASE_BLOG_URI='mongodb+srv://cluster0.0giox.mongodb.net/LenasBlog?retryWrites=true&w=majority'
+export MONGODB_DATABASE_BLOG_URI='mongodb+srv://cluster0.0giox.mongodb.net/LenasBlog'
+#                                 mongodb+srv://cluster0.rug17.mongodb.net/mongoblog
+export SECRET_KEY='5d9015adad41c24544a4495146dbd644'
+export SQLALCHEMY_DATABASE_URI='sqlite:///site.db'
+export MAIL_USER='lenaschaerer'
+export MAIL_PASS=''

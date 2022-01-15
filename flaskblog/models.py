@@ -1,14 +1,17 @@
 from datetime import datetime
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
+from mongoengine.fields import BooleanField
+from wtforms.fields.core import IntegerField
 from flaskblog import db, login_manager 
 from flask_login import UserMixin
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.objects.get(id=user_id)
-
-
+    try:
+        return User.objects.get(id=user_id)
+    except:
+        return None
 
 class User(db.Document, UserMixin):
     #id = db.Column(db.Integer, primary_key=True)
@@ -42,9 +45,19 @@ class Post(db.Document):
     title = db.StringField(nullable = False)
     date_posted = db.DateField(nullable = False, default = datetime.utcnow)
     content = db.StringField(nullable = False)
-    #address
-    #location (geometry location)
-    #has baby chaning/wheelchair (Boolean)
+    address = db.StringField(max_length=150, nullable=False)
+    #location = db.PointField()
+    price = db.StringField()
+    opening_hours = db.StringField()
+    # #facilities
+    toilet_paper = db.BooleanField(nullalbe=False)
+    sink = db.BooleanField(nullable=False)
+    soap = db.BooleanField(nullable=False)
+    wheelchair_acc = db.BooleanField(nullable=False)
+    toilet = db.BooleanField(nullable=False)
+    urinal = db.BooleanField(nullable=False)
+    
+
     #review_id = ReferenceList (Review)
     user_id = db.ReferenceField('User')
 
@@ -52,8 +65,8 @@ class Post(db.Document):
         return f"Post('{self.title}', '{self.date_posted}')"
 
 
-#class Review(db.Document):
-    #description/comment
-    #rating 1-5
-    #post_id = ReferenceField (Post)
-    #user_id = ReferenceField (User)
+class Rating(db.Document):
+    rating = db.IntField(nullable = False)
+    comment = db.StringField(nullable = False)
+    post_id = db.ReferenceField ('Post', backref='author',lazy=True)
+    user_id = db.ReferenceField ('User')

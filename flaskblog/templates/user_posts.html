@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1 class="mb-3">Posts by {{user.username }} ({{ posts.total }})</h1>
+    <h1 class="mb-3">Posts by {{user.username }} ({{ posts.count() }})</h1>
     {% for post in posts.items %}
         <article class="media content-section">
             <img class="rounded-circle article-img" src=" {{ url_for('static', filename='profile_pics/' + post.author.image_file) }}" alt="">
@@ -10,7 +10,7 @@
                 <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
             </div>
             <h2><a class="article-title" href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a></h2>
-            <p class="article-content">{{ post.content }}</p>
+            <p class="article-content">{{ post.content }} {{post.price}} {{ post.address }} {{ post.opening_hours }} </p>
             </div>
         </article>
     {% endfor%}
